@@ -18,7 +18,7 @@ public class OptionsParserTest {
     @Test
     public void testParse() {
         String[] args = new String[]{"-f=C:\\tmp\\ppt.properties", "-std=c99"};
-        Options opt = OptionsParser.get().parse(args);
+        Options opt = ArgsParser.get().parse(args);
         int i = 0;
         for (Opt o : opt.getOptions()) {
             assertEquals(format(o.toString()), args[i++]);
@@ -36,7 +36,7 @@ public class OptionsParserTest {
     }
 
     private Opt parse(String arg) {
-        return OptionsParser.get().parse(new String[]{arg}).getOptions().get(0);
+        return ArgsParser.get().parse(new String[]{arg}).getOptions().get(0);
     }
 
 }

@@ -6,13 +6,13 @@
 package br.perin.app;
 
 /**
- * Classe OptionsParser
+ * Classe ArgsParser
  *
  * @author Joaov
  */
-public class OptionsParser {
+public class ArgsParser {
 
-    public static OptionsParser instance;
+    public static ArgsParser instance;
 
     public Options parse(String[] args) {
         Options opt = new Options();
@@ -29,7 +29,7 @@ public class OptionsParser {
         return new Opt(key, value);
     }
 
-    public static OptionsParser get() {
+    public static ArgsParser get() {
         if (instance == null) {
             instantiate();
         }
@@ -38,7 +38,7 @@ public class OptionsParser {
 
     private static synchronized void instantiate() {
         if (instance == null) {
-            instance = new OptionsParser();
+            instance = new ArgsParser();
         }
     }
 
