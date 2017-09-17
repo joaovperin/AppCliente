@@ -48,17 +48,31 @@ public class PropertyLoader {
         }
     }
 
+    public int getInt(String key, int def) {
+        return Integer.valueOf(getProperties().getProperty(key, String.valueOf(def)));
+    }
+    
+    public String getString(String key, String def) {
+        return getProperties().getProperty(key, def);
+    }
+
     /**
      * Printa todas as propriedades carregadas
      *
      * @param output
      */
     public void printAll(PrintStream output) {
+        output.println("Propriedades Carregadas:");
         getProperties().forEach((k, v) -> {
             output.println(k.toString().concat("=").concat(v.toString()));
         });
     }
 
+    /**
+     * Retorna as propriedades carregadas
+     *
+     * @return Properties
+     */
     private Properties getProperties() {
         if (properties.isEmpty()) {
             throw new RuntimeException("Não carregou nenhuma propriedade");
@@ -66,6 +80,11 @@ public class PropertyLoader {
         return properties;
     }
 
+    /**
+     * Retorna a instância Singleton
+     *
+     * @return PropertyLoader
+     */
     public static PropertyLoader get() {
         if (instance == null) {
             instantiate();
@@ -73,6 +92,9 @@ public class PropertyLoader {
         return instance;
     }
 
+    /**
+     * Instancia o Singleton
+     */
     private static synchronized void instantiate() {
         if (instance == null) {
             instance = new PropertyLoader();
