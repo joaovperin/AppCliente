@@ -21,7 +21,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // Testa passando a propriedade de diretório
-        args = new String[]{"-d=C:\\a\\app.properties", "-r=client"};
+        args = new String[] { "-d=C:\\a\\app.properties", "-r=client" };
         Options opt = ArgsParser.get().parse(args);
         // Busca o valor do diretório passado
         String propsDir = opt.get("d");
