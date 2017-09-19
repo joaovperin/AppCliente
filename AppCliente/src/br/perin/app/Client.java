@@ -24,7 +24,13 @@ public class Client {
 
     /** Socket da conexão com o servidor */
     private Socket socket;
-
+    //
+    //
+    // 1-3 = cod
+    // 4-7 = tamanho
+    // 8-2000 = msg
+    //
+    //
     /**
      * Envia uma mensagem para o servidor
      *
