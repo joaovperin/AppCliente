@@ -48,10 +48,26 @@ public class PropertyLoader {
         }
     }
 
+    /**
+     * Retorna um parâmetro inteiro
+     *
+     *
+     * @param key Chave
+     * @param def Valor default
+     * @return int
+     */
     public int getInt(String key, int def) {
         return Integer.valueOf(getProperties().getProperty(key, String.valueOf(def)));
     }
-    
+
+    /**
+     * Retorna um parâmetro String
+     *
+     *
+     * @param key Chave
+     * @param def Valor default
+     * @return String
+     */
     public String getString(String key, String def) {
         return getProperties().getProperty(key, def);
     }
