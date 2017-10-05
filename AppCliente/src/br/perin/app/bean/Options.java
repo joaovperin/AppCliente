@@ -7,6 +7,7 @@ package br.perin.app.bean;
 
 import br.perin.app.Opt;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,9 +19,13 @@ import java.util.List;
  */
 public class Options {
 
-    /** Lista de opções carregadas */
+    /**
+     * Lista de opções carregadas
+     */
     private final List<Opt> options;
-    /** Tamanho do buffer */
+    /**
+     * Tamanho do buffer
+     */
     private static final int BUFF_SIZE = 512;
 
     /**
@@ -48,13 +53,20 @@ public class Options {
      * @param alias
      * @return String
      */
-    public String get(String alias) {
-        try {
-            return options.stream().filter((o) -> o.getAlias().equals(alias)).
-                    findFirst().get().getValue();
-        } catch (Exception e) {
-            throw new RuntimeException("Parâmetro não encontrado :/");
-        }
+    public String getString(String alias) {
+        return getProperty(alias, true);
+    }
+
+    /**
+     * Retorna o valor de uma opção carregada buscando pelo alias
+     *
+     * @param alias
+     * @return String
+     */
+    public boolean isSet(String alias) {
+        String r = getProperty(alias, false);
+        return !r.trim().isEmpty()
+                && (Boolean.parseBoolean(r) || r.equalsIgnoreCase(BigDecimal.ONE.toString()));
     }
 
     /**
@@ -90,6 +102,25 @@ public class Options {
             sb.append('\n').append(e.toString());
         });
         return sb.toString();
+    }
+
+    /**
+     * Retorna o valor de uma opção carregada buscando pelo alias
+     *
+     * @param alias
+     * @return String
+     */
+    private String getProperty(String alias, boolean throwException) {
+        try {
+            return options.stream().filter((o) -> o.getAlias().equals(alias)).
+                    findFirst().get().getValue();
+        } catch (Exception e) {
+            if (throwException) {
+                throw new RuntimeException("Parâmetro não encontrado: ".concat(alias));
+            }
+        }
+        // Retorna uma String vazia para evitar problemas 
+        return new String();
     }
 
 }

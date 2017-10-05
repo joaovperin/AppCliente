@@ -19,10 +19,14 @@ import java.util.Properties;
  */
 public class PropertyLoader {
 
-    /** Instância Singleton */
+    /**
+     * Instância Singleton
+     */
     private static PropertyLoader instance;
 
-    /** Cache de propriedades */
+    /**
+     * Cache de propriedades
+     */
     private final Properties properties;
 
     /**
@@ -41,11 +45,25 @@ public class PropertyLoader {
         try {
             InputStream f = new FileInputStream(dir);
             properties.load(f);
+            if (properties.isEmpty()) {
+                System.out.println(getNoPropertyLoadedMessage("Arquivo de propriedades vazio."));
+            }
         } catch (FileNotFoundException ex) {
-            throw new RuntimeException("Arquivo não encontrado:" + dir);
+            System.out.println(getNoPropertyLoadedMessage("Arquivo não encontrado."));
         } catch (IOException ex) {
-            System.out.println("Falha ao carregar propriedadesd do arquivo:" + dir);
+            System.out.println(getNoPropertyLoadedMessage("Falha na leitura do arquivo."));
         }
+    }
+
+    /**
+     * Retorna mensagem default de nenhuma propriedade carregada concatenando a
+     * causa
+     *
+     * @param cause
+     * @return String
+     */
+    private String getNoPropertyLoadedMessage(String cause) {
+        return "Nenhuma propriedade foi carregada! Motivo: ".concat(cause);
     }
 
     /**
@@ -90,9 +108,6 @@ public class PropertyLoader {
      * @return Properties
      */
     private Properties getProperties() {
-        if (properties.isEmpty()) {
-            throw new RuntimeException("Não carregou nenhuma propriedade");
-        }
         return properties;
     }
 

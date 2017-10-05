@@ -20,18 +20,22 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // Testa passando a propriedade de diretório
-        args = new String[]{"-d=C:\\a\\app.properties", "-r=client"};
+        // Carrega os argumentos de linha de comando
         Options opt = ArgsParser.get().parse(args);
+        // Se passou a opção DEBUG, simula argumentos
+        if (opt.isSet("debug")) {
+            args = new String[]{"-d=C:\\Users\\0199831\\Perin\\a\\app.properties", "-r=client"};
+            opt = ArgsParser.get().parse(args);
+        }
         // Busca o valor do diretório passado
-        String propsDir = opt.get("d");
+        String propsDir = opt.getString("d");
         PropertyLoader.get().load(propsDir);
         // Printa todas as opções e propriedades carregadas
         opt.printAll(System.out);
         System.out.println();
         PropertyLoader.get().printAll(System.out);
         // Roda a aplicação de acordo com o parâmetro recebido
-        String run = opt.get("r");
+        String run = opt.getString("r");
         run(run);
     }
 
